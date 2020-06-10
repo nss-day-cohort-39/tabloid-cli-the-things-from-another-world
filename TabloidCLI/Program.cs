@@ -11,7 +11,7 @@ namespace TabloidCLI
 | Hello and Welcome to Tabloid! |
 ---------------------------------
 ");
-         
+            
 
             // MainMenuManager implements the IUserInterfaceManager interface
             IUserInterfaceManager ui = new MainMenuManager();
