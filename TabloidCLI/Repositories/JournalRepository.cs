@@ -45,7 +45,7 @@ namespace TabloidCLI
             }
         }
 
-        public void Insert(Author author)
+        public void Insert(Journal journal)
         {
             using (SqlConnection conn = Connection)
             {
@@ -63,7 +63,7 @@ namespace TabloidCLI
             }
         }
 
-        public void Update(Author author)
+        public void Update(Journal journal)
         {
             using (SqlConnection conn = Connection)
             {
@@ -101,5 +101,9 @@ namespace TabloidCLI
             }
         }
 
+        public Journal Get(int id)
+        {
+            return null;
+        }
     }
 }
