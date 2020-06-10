@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TabloidCLI.Models;
 
 namespace TabloidCLI.UserInterfaceManagers
 {
@@ -19,7 +20,7 @@ namespace TabloidCLI.UserInterfaceManagers
         }
 
 
-        public IUserInterfaceManager Excute()
+        public IUserInterfaceManager Execute()
         {
             Console.WriteLine("Journal Menu");
             Console.WriteLine(" 1) List All Entires");
