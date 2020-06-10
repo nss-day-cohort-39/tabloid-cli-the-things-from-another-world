@@ -28,13 +28,16 @@ namespace TabloidCLI
         public static void ChangeColor(int colorIndex)
         {
 
-            // Display current Background color 
-            Console.WriteLine("Default Background Color: {0}",
-                              Console.BackgroundColor);
+            // Get the list of available colors 
+            ConsoleColor[] consoleColors
+                = (ConsoleColor[])ConsoleColor
+                      .GetValues(typeof(ConsoleColor));
 
-            // Set the Background color to blue 
-            Console.BackgroundColor
-                = ConsoleColor.Blue;
+            ConsoleColor color = consoleColors[colorIndex];
+
+
+            // Set the Background color
+            Console.BackgroundColor = color;
 
             // Display current Background color 
             Console.WriteLine("Changed Background Color: {0}",

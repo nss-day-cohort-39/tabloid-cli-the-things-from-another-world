@@ -17,6 +17,7 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.WriteLine(" 4) Post Management");
             Console.WriteLine(" 5) Tag Management");
             Console.WriteLine(" 6) Search by Tag");
+            Console.WriteLine(" 7) Choose a Background Color");
             Console.WriteLine(" 0) Exit");
 
             Console.Write("> ");
@@ -29,6 +30,13 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "4": throw new NotImplementedException();
                 case "5": return new TagManager(this, CONNECTION_STRING);
                 case "6": return new SearchManager(this, CONNECTION_STRING);
+                case "7":
+                    //Allow user to change the background color
+                    Utilities.ListColor();
+                    Console.Write("Please choose a color by typing its index: ");
+                    int colorIndex = Int32.Parse(Console.ReadLine());
+                    Utilities.ChangeColor(colorIndex);
+                    return this;
                 case "0":
                     Console.WriteLine("Good bye");
                     return null;
