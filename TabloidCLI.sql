@@ -122,3 +122,12 @@ INSERT INTO Tag ( Name ) VALUES ( 'nerdy' );
 
 INSERT INTO Journal ( Title, Content, CreateDateTime ) VALUES ( 'My Big Day', 'I had a big day today. Would you believe I saw a dog????', '2020-04-30' ) ;
 
+SELECT p.id,
+                                               p.Title As PostTitle,
+                                               p.URL AS PostUrl,
+                                               p.PublishDateTime,
+                                               p.AuthorId,
+                                               p.BlogId
+                                          FROM Post p
+                                               LEFT JOIN Author a on p.AuthorId = a.Id
+                                               LEFT JOIN Blog b on p.BlogId = b.Id
