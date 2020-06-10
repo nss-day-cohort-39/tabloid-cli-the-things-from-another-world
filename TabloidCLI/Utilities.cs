@@ -21,11 +21,11 @@ namespace TabloidCLI
             Console.WriteLine("List of available "
                               + "Console Colors:");
             foreach (var color in consoleColors)
-                Console.WriteLine(color);
+                Console.WriteLine($"{Array.IndexOf(consoleColors, color)} - {color}");
 
         }
         
-        public static void ChangeColor(string color)
+        public static void ChangeColor(int colorIndex)
         {
 
             // Display current Background color 
