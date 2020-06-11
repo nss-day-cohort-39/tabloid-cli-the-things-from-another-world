@@ -47,9 +47,9 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "3":
                     Edit();
                     return this;
-                //case "4":
-                //    Remove();
-                //    return this;
+                case "4":
+                    Remove();
+                    return this;
                 //case "5":
                 //    Remove();
                 //    return this;
@@ -70,7 +70,7 @@ namespace TabloidCLI.UserInterfaceManagers
 Title: {post.Title}
 URL: {post.Url}
 Published Date: {post.PublishDateTime}
-Blog TItle: {post.Blog.Title}
+Blog Title: {post.Blog.Title}
 Author: {post.Author.FullName}");
             }
         }
@@ -182,9 +182,24 @@ Author: {post.Author.FullName}");
             Console.Write("Date Published (Enter Format as YYYY-MM-DD: ");
             post.PublishDateTime = DateTime.Parse(Console.ReadLine());
 
+            Author authorToAdd = ChooseAuthor("Which author would you like to add to the post?");
+            if (authorToAdd == null)
+            {
+                return;
+            }
 
+            Blog blogToAdd = ChooseBlog("Which blog would you like to add to the post?");
+            if (blogToAdd == null)
+            {
+                return;
+            }
+
+            post.Author = authorToAdd;
+            post.Blog = blogToAdd;
 
             _postRepository.Insert(post);
+            Console.WriteLine($"{post.Title} added!");
+
         }
 
         private void Edit()
@@ -215,17 +230,35 @@ Author: {post.Author.FullName}");
                 postToEdit.PublishDateTime = DateTime.Parse(datePublished);
             }
 
+            Author authorToEdit = ChooseAuthor("New Author (blank to leave unchanged: ?");
+            if (authorToEdit != null)
+            {
+                postToEdit.Author = authorToEdit;
+            }
+
+            Blog blogToAdd = ChooseBlog("Which blog would you like to add to the post?");
+            if (blogToAdd != null)
+            {
+                postToEdit.Blog = blogToAdd;
+         
+            }
+
             _postRepository.Update(postToEdit);
+            Console.WriteLine($"{postToEdit.Title} edited!");
+
 
         }
 
-        //private void Remove()
-        //{
-        //    Author authorToDelete = Choose("Which author would you like to remove?");
-        //    if (authorToDelete != null)
-        //    {
-        //        _authorRepository.Delete(authorToDelete.Id);
-        //    }
-        //}
+        private void Remove()
+        {
+            Post postToDelete = Choose("Which post would you like to remove?");
+            if (postToDelete != null)
+            {
+                _postRepository.Delete(postToDelete.Id);
+            }
+
+            Console.WriteLine($"{postToDelete.Title} deleted!");
+
+        }
     }
 }

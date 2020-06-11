@@ -210,12 +210,12 @@ namespace TabloidCLI.Repositories
                 {
                     cmd.CommandText = @"INSERT INTO POST (Title, Url, PublishDateTime, AuthorId, BlogId )
                                         OUTPUT INSERTED.Id 
-                                                     VALUES (@title, @url, @PublishDateTime @AuthorId @BlogId)";
+                                                     VALUES (@title, @url, @PublishDateTime, @AuthorId, @BlogId)";
                     cmd.Parameters.AddWithValue("@title", post.Title);
                     cmd.Parameters.AddWithValue("@url", post.Url);
                     cmd.Parameters.AddWithValue("@PublishDateTime", post.PublishDateTime);
                     cmd.Parameters.AddWithValue("@AuthorId", post.Author.Id);
-                    cmd.Parameters.AddWithValue("@AuthorId", post.Blog.Id);
+                    cmd.Parameters.AddWithValue("@BlogId", post.Blog.Id);
 
 
 
@@ -232,11 +232,11 @@ namespace TabloidCLI.Repositories
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"UPDATE Post 
-                                           SET Title= @title
-                                               Url = @url,
-                                               PublishDateTime = @PublishDateTime
-                                               AuthorId= @AuthorId
-                                               BlogId= @BlogId
+                                           SET Title=@title,
+                                               Url =@url,
+                                               PublishDateTime =@PublishDateTime,
+                                               AuthorId=@AuthorId,
+                                               BlogId=@BlogId
 
                                          WHERE id = @id";
 
