@@ -53,6 +53,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 //case "5":
                 //    Remove();
                 //    return this;
+                case "6":
+                    Post post = Choose();
+                    if (post == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                        return new PostDetailManager(this, _connectionString, post.Id);
+                    }
                 case "0":
                     return _parentUI;
                 default:
