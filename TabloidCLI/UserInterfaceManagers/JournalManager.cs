@@ -40,12 +40,12 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "2":
                     Add();
                     return this;
-                //case "3":
-                //    Edit();
-                //    return this;
-                //case "4":
-                //    Remove();
-                //    return this;
+                case "3":
+                    Edit();
+                    return this;
+                case "4":
+                    Remove();
+                    return this;
                 case "0":
                     return _parentUI;
                 default:
@@ -62,22 +62,83 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine(journal);
             }
         }
+        private Journal Choose(string prompt = null)
+        {
+            if (prompt == null)
+            {
+                prompt = "Please choose an Journal Entry:";
+            }
+
+            Console.WriteLine(prompt);
+
+            List<Journal> journals = _journalRepository.GetAll();
+
+            for (int i = 0; i < journals.Count; i++)
+            {
+                Journal journal = journals[i];
+                Console.WriteLine($" {i + 1}) {journal.Title} - {journal.CreateDateTime}");
+            }
+            Console.Write("> ");
+
+            string input = Console.ReadLine();
+            try
+            {
+                int choice = int.Parse(input);
+                return journals[choice - 1];
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Invalid Selection");
+                return null;
+            }
+        }
         private void Add()
         {
-            Console.WriteLine("New Author");
-            Author author = new Author();
+            Console.WriteLine("New Journal Entry");
+            Journal journal = new Journal();
 
-            Console.Write("First Name: ");
-            author.FirstName = Console.ReadLine();
+            Console.Write("Title: ");
+            journal.Title = Console.ReadLine();
 
-            Console.Write("Last Name: ");
-            author.LastName = Console.ReadLine();
+            Console.Write("Content: ");
+            journal.Content = Console.ReadLine();
 
             Console.Write("Bio: ");
-            author.Bio = Console.ReadLine();
+            journal.CreateDateTime = DateTime.Now;
 
-            _authorRepository.Insert(author);
+            _journalRepository.Insert(journal);
         }
+        private void Edit()
+        {
+            Journal journalToEdit = Choose("Which journal entry would you like to edit?");
+            if (journalToEdit == null)
+            {
+                return;
+            }
 
+            Console.WriteLine();
+            Console.Write("New title (blank to leave unchanged: ");
+            string title = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(title))
+            {
+                journalToEdit.Title = title;
+            }
+            Console.Write("New journal entry content (blank to leave unchanged: ");
+            string content = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(content))
+            {
+                journalToEdit.Content = content;
+            }
+           
+            _journalRepository.Update(journalToEdit);
+        }
+        private void Remove()
+        {
+            Journal journalToDelete = Choose("Which journal would you like to remove?");
+            if (journalToDelete != null)
+            {
+                _journalRepository.Delete(journalToDelete.Id);
+            }
+        }
     }
 }

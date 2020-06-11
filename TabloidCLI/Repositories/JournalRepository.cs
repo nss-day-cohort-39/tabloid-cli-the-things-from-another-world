@@ -52,11 +52,11 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO Author (FirstName, LastName, Bio )
-                                                     VALUES (@firstName, @lastName, @bio)";
-                    cmd.Parameters.AddWithValue("@firstName", author.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", author.LastName);
-                    cmd.Parameters.AddWithValue("@bio", author.Bio);
+                    cmd.CommandText = @"INSERT INTO Journal (Title, Content, CreateDateTime )
+                                                     VALUES (@title, @content, @createDateTime)";
+                    cmd.Parameters.AddWithValue("@title", journal.Title);
+                    cmd.Parameters.AddWithValue("@content", journal.Content);
+                    cmd.Parameters.AddWithValue("@createDateTime", journal.CreateDateTime);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -70,16 +70,16 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"UPDATE Author 
-                                           SET FirstName = @firstName,
-                                               LastName = @lastName,
-                                               bio = @bio
+                    cmd.CommandText = @"UPDATE Journal 
+                                           SET Title = @title,
+                                               Content = @content,
+                                               createDateTime = @createDateTime
                                          WHERE id = @id";
 
-                    cmd.Parameters.AddWithValue("@firstName", author.FirstName);
-                    cmd.Parameters.AddWithValue("@lastName", author.LastName);
-                    cmd.Parameters.AddWithValue("@bio", author.Bio);
-                    cmd.Parameters.AddWithValue("@id", author.Id);
+                    cmd.Parameters.AddWithValue("@title", journal.Title);
+                    cmd.Parameters.AddWithValue("@content", journal.Content);
+                    cmd.Parameters.AddWithValue("@createDateTime", journal.CreateDateTime);
+                    cmd.Parameters.AddWithValue("@id", journal.Id);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -93,7 +93,7 @@ namespace TabloidCLI
                 conn.Open();
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"DELETE FROM Author WHERE id = @id";
+                    cmd.CommandText = @"DELETE FROM Journal WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();
@@ -103,7 +103,41 @@ namespace TabloidCLI
 
         public Journal Get(int id)
         {
-            return null;
+            using (SqlConnection conn = Connection)
+            {
+                conn.Open();
+                using (SqlCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id AS JournalId,
+                                               Title,
+                                               Content,
+                                             FROM Journal 
+                                            WHERE Id = @id";
+
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    Journal journal = null;
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        if (journal == null)
+                        {
+                            journal = new Journal()
+                            {
+                                Id = reader.GetInt32(reader.GetOrdinal("JournalId")),
+                                Title = reader.GetString(reader.GetOrdinal("Title")),
+                                Content = reader.GetString(reader.GetOrdinal("Content")),
+
+                            };
+                        }
+
+                    }
+                    reader.Close();
+
+                    return journal;
+                }
+            }
         }
     }
 }
