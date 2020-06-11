@@ -37,16 +37,16 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "1":
                     List();
                     return this;
-                //case "2":
-                //    Blog blog = Choose();
-                //    if (blog == null)
-                //    {
-                //        return this;
-                //    }
-                //    else
-                //    {
-                //        return new AuthorDetailManager(this, _connectionString, author.Id);
-                //    }
+                case "2":
+                    Blog blog = Choose();
+                    if (blog == null)
+                    {
+                        return this;
+                    }
+                    else
+                    {
+                       return new BlogDetailManager(this, _connectionString, blog.Id);
+                    }
                 case "3":
                     Add();
                     return this;
@@ -56,8 +56,8 @@ namespace TabloidCLI.UserInterfaceManagers
                 case "5":
                     Remove();
                     return this;
-                //case "0":
-                //    return _parentUI;
+                case "0":
+                    return _parentUI;
                 default:
                     Console.WriteLine("Invalid Selection");
                     return this;
