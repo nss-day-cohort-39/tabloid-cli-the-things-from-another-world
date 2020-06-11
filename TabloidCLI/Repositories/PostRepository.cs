@@ -85,15 +85,15 @@ namespace TabloidCLI.Repositories
                                                a.LastName,
                                                a.Bio,
                                                b.Title AS BlogTitle,
-                                               b.URL AS BlogUrl
+                                               b.URL AS BlogUrl,
                                                t.Id AS TagId,
                                                t.Name
                                           FROM Post p 
                                                JOIN Author a on p.AuthorId = a.Id
                                                JOIN Blog b on p.BlogId = b.Id
-                                               LEFT JOIN PostTag at on a.Id = at.PostId
-                                               LEFT JOIN Tag t on t.Id = p.TagId
-                                         WHERE a.id = @id";
+                                               LEFT JOIN PostTag pt on p.Id = pt.PostId
+                                               LEFT JOIN Tag t on t.Id = pt.TagId
+                                         WHERE p.Id = @id";
 
                     cmd.Parameters.AddWithValue("@id", id);
 
@@ -106,7 +106,7 @@ namespace TabloidCLI.Repositories
                         {
                             post = new Post()
                             {
-                                Id = reader.GetInt32(reader.GetOrdinal("Id")),
+                                Id = reader.GetInt32(reader.GetOrdinal("PostId")),
                                 Title = reader.GetString(reader.GetOrdinal("PostTitle")),
                                 Url = reader.GetString(reader.GetOrdinal("PostUrl")),
                                 PublishDateTime = reader.GetDateTime(reader.GetOrdinal("PublishDateTime")),
