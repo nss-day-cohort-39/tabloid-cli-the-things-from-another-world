@@ -103,7 +103,6 @@ namespace TabloidCLI.UserInterfaceManagers
             Console.Write("Content: ");
             journal.Content = Console.ReadLine();
 
-            Console.Write("Bio: ");
             journal.CreateDateTime = DateTime.Now;
 
             _journalRepository.Insert(journal);
@@ -117,19 +116,19 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New title (blank to leave unchanged: ");
+            Console.Write("New title (blank to leave unchanged): ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 journalToEdit.Title = title;
             }
-            Console.Write("New journal entry content (blank to leave unchanged: ");
+            Console.Write("New journal entry content (blank to leave unchanged): ");
             string content = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(content))
             {
                 journalToEdit.Content = content;
             }
-           
+
             _journalRepository.Update(journalToEdit);
         }
         private void Remove()
