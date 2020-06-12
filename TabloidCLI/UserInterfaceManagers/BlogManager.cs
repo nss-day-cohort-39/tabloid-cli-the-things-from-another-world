@@ -90,6 +90,12 @@ namespace TabloidCLI.UserInterfaceManagers
             if (blogToDelete != null)
             {
                 _blogRepository.Delete(blogToDelete.Id);
+                Console.WriteLine($"{blogToDelete.Title} deleted!");
+
+            }
+            else
+            {
+                Console.WriteLine($"Invalid selection!");
             }
         }
         private Blog Choose(string prompt = null)
@@ -132,20 +138,21 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New Title (blank to leave unchanged: ");
+            Console.Write("New Title (blank to leave unchanged): ");
             string title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(title))
             {
                 blogToEdit.Title = title;
             }
-            Console.Write("New URL (blank to leave unchanged: ");
+            Console.Write("New URL (blank to leave unchanged): ");
             string URL = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(URL))
             {
                 blogToEdit.Url = URL;
             }
 
-            _blogRepository.Update(blogToEdit) ;
+            _blogRepository.Update(blogToEdit);
+           Console.WriteLine($"{blogToEdit.Title} edited!");
         }
 
     }

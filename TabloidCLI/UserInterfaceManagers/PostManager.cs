@@ -221,7 +221,7 @@ Author: {post.Author.FullName}");
             }
 
             Console.WriteLine();
-            Console.Write("New post title name (blank to leave unchanged: ");
+            Console.Write("New post title name (blank to leave unchanged): ");
             string Title = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(Title))
             {
@@ -233,14 +233,14 @@ Author: {post.Author.FullName}");
             {
                 postToEdit.Url = Url;
             }
-            Console.Write("New publish date [format: YYYY-MM-DD] (blank to leave unchanged: ");
+            Console.Write("New publish date [format: YYYY-MM-DD] (blank to leave unchanged): ");
             string datePublished = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(datePublished))
             {
                 postToEdit.PublishDateTime = DateTime.Parse(datePublished);
             }
 
-            Author authorToEdit = ChooseAuthor("New Author (blank to leave unchanged: ?");
+            Author authorToEdit = ChooseAuthor("New Author (blank to leave unchanged): ?");
             if (authorToEdit != null)
             {
                 postToEdit.Author = authorToEdit;
@@ -265,10 +265,16 @@ Author: {post.Author.FullName}");
             if (postToDelete != null)
             {
                 _postRepository.Delete(postToDelete.Id);
+                
+           Console.WriteLine($"{postToDelete.Title} deleted!");
+
+            }
+            else
+            {
+                Console.WriteLine($"Invalid selection!");
             }
 
-            Console.WriteLine($"{postToDelete.Title} deleted!");
-
+            
         }
     }
 }
