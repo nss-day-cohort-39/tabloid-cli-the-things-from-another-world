@@ -127,19 +127,19 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             Console.WriteLine();
-            Console.Write("New first name (blank to leave unchanged: ");
+            Console.Write("New first name (blank to leave unchanged): ");
             string firstName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(firstName))
             {
                 authorToEdit.FirstName = firstName;
             }
-            Console.Write("New last name (blank to leave unchanged: ");
+            Console.Write("New last name (blank to leave unchanged): ");
             string lastName = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(lastName))
             {
                 authorToEdit.LastName = lastName;
             }
-            Console.Write("New bio (blank to leave unchanged: ");
+            Console.Write("New bio (blank to leave unchanged): ");
             string bio = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(bio))
             {
@@ -147,6 +147,7 @@ namespace TabloidCLI.UserInterfaceManagers
             }
 
             _authorRepository.Update(authorToEdit);
+            Console.WriteLine($"{authorToEdit.FullName} edited!");
         }
 
         private void Remove()
@@ -155,7 +156,10 @@ namespace TabloidCLI.UserInterfaceManagers
             if (authorToDelete != null)
             {
                 _authorRepository.Delete(authorToDelete.Id);
+                Console.WriteLine($"{authorToDelete.FullName} deleted!");
+
             }
+         
         }
     }
 }
