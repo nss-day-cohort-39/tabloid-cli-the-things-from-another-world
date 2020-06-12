@@ -195,7 +195,7 @@ Author: {post.Author.FullName}");
             Console.Write("URL: ");
             post.Url = Console.ReadLine();
 
-            Console.Write("Date Published (Enter Format as YYYY-MM-DD: ");
+            Console.Write("Date Published (Enter Format as YYYY-MM-DD): ");
             string dateInput = Console.ReadLine();
             Nullable<DateTime> dateCheck = null;
 
