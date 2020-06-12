@@ -269,11 +269,7 @@ Author: {post.Author.FullName}");
            Console.WriteLine($"{postToDelete.Title} deleted!");
 
             }
-            else
-            {
-                Console.WriteLine($"Invalid selection!");
-            }
-
+          
             
         }
     }

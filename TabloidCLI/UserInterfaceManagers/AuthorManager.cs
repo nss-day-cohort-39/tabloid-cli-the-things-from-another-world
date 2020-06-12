@@ -159,10 +159,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine($"{authorToDelete.FullName} deleted!");
 
             }
-            else
-            {
-                Console.WriteLine($"Invalid selection!");
-            }
+         
         }
     }
 }

@@ -93,10 +93,7 @@ namespace TabloidCLI.UserInterfaceManagers
                 Console.WriteLine($"{blogToDelete.Title} deleted!");
 
             }
-            else
-            {
-                Console.WriteLine($"Invalid selection!");
-            }
+         
         }
         private Blog Choose(string prompt = null)
         {
