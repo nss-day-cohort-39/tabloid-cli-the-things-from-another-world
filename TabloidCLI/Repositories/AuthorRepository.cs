@@ -21,7 +21,8 @@ namespace TabloidCLI
                                                FirstName,
                                                LastName,
                                                Bio
-                                          FROM Author";
+                                          FROM Author
+                                          WHERE WasDeleted = 0";
 
                     List<Author> authors = new List<Author>();
 
@@ -147,7 +148,7 @@ namespace TabloidCLI
                 using (SqlCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"DELETE FROM AuthorTag WHERE AuthorId = @id;
-                                        DELETE FROM Author WHERE id = @id";
+                                        UPDATE Author SET WasDeleted = 1 WHERE id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                     cmd.ExecuteNonQuery();

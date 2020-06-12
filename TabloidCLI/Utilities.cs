@@ -39,6 +39,30 @@ namespace TabloidCLI
             // Set the Background color
             Console.BackgroundColor = color;
 
+            switch (colorIndex)
+            {
+                case 3:
+                case 6:
+                case 7:
+                case 10:
+                case 11:
+                case 14:
+                case 15:
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    return;
+                case 0:
+                case 1:
+                case 2:
+                case 4:
+                case 5:
+                case 8:
+                case 9:
+                case 12:
+                case 13:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    return;
+            }
+
             // Display current Background color 
             Console.WriteLine("Changed Background Color: {0}",
                               Console.BackgroundColor);

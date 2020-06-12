@@ -116,7 +116,7 @@ Author: {post.Author.FullName}");
             }
         }
 
-        private Author ChooseAuthor(string prompt = null)
+        private Author ChooseAuthor(string prompt = null, bool message = true)
         {
             if (prompt == null)
             {
@@ -142,12 +142,15 @@ Author: {post.Author.FullName}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid Selection");
+                if (message != false || input != "")
+                {
+                    Console.WriteLine("Invalid Selection");
+                }
                 return null;
             }
         }
 
-        private Blog ChooseBlog(string prompt = null)
+        private Blog ChooseBlog(string prompt = null, bool message = true)
         {
             if (prompt == null)
             {
@@ -173,7 +176,10 @@ Author: {post.Author.FullName}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Invalid Selection");
+                if (message != false || input != "")
+                {
+                    Console.WriteLine("Invalid Selection");
+                }
                 return null;
             }
         }
@@ -190,18 +196,58 @@ Author: {post.Author.FullName}");
             post.Url = Console.ReadLine();
 
             Console.Write("Date Published (Enter Format as YYYY-MM-DD: ");
-            post.PublishDateTime = DateTime.Parse(Console.ReadLine());
+            string dateInput = Console.ReadLine();
+            Nullable<DateTime> dateCheck = null;
+
+            //while the date is not yet set...
+            while (dateCheck == null)
+            {
+                try
+                {
+                    try //try to parse the user input into a DateTime
+                    {
+                        post.PublishDateTime = DateTime.Parse(dateInput);
+                    }
+                    catch //if that fails then give them an error
+                    {
+                        Console.Write("Please input the date in YYYY-MM-DD format: ");
+                        throw new System.Exception();
+                    }
+
+
+                    try //check to make sure that the year is greater than the min possible value for SQL dates
+                    {
+                        if (DateTime.Parse(dateInput).Year < 1753)
+                        {
+                            throw new System.Exception();
+                        }
+                    }
+                    catch //if it isn't then thow an exception
+                    {
+                        Console.Write("Please input a date greater than 1753: ");
+                        throw new System.Exception();
+                    }
+                    dateCheck = DateTime.Parse(dateInput);
+                }
+                catch //if an exception is thrown anywhere in the nested try methods, then prompt the user for a valid date again
+                {
+                    dateInput = Console.ReadLine();
+                }
+
+            }
 
             Author authorToAdd = ChooseAuthor("Which author would you like to add to the post?");
-            if (authorToAdd == null)
+            while (authorToAdd == null)
             {
-                return;
+                authorToAdd = ChooseAuthor("Which author would you like to add to the post?");
+                Console.WriteLine("Please choose from the list above.");
             }
 
             Blog blogToAdd = ChooseBlog("Which blog would you like to add to the post?");
-            if (blogToAdd == null)
+            while (blogToAdd == null)
             {
-                return;
+                blogToAdd = ChooseBlog("Which blog would you like to add to the post?");
+                Console.WriteLine("Please choose from the list above.");
             }
 
             post.Author = authorToAdd;
@@ -227,26 +273,65 @@ Author: {post.Author.FullName}");
             {
                 postToEdit.Title = Title;
             }
-            Console.Write("New Url (blank to leave unchanged: ");
+            Console.Write("New Url (blank to leave unchanged): ");
             string Url = Console.ReadLine();
             if (!string.IsNullOrWhiteSpace(Url))
             {
                 postToEdit.Url = Url;
             }
             Console.Write("New publish date [format: YYYY-MM-DD] (blank to leave unchanged): ");
-            string datePublished = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(datePublished))
+            string dateInput = Console.ReadLine();
+            if (!string.IsNullOrWhiteSpace(dateInput))
             {
-                postToEdit.PublishDateTime = DateTime.Parse(datePublished);
+
+                Nullable<DateTime> dateCheck = null;
+
+                //while the date is not yet set...
+                while (dateCheck == null)
+                {
+                    try
+                    {
+                        try //try to parse the user input into a DateTime
+                        {
+                            postToEdit.PublishDateTime = DateTime.Parse(dateInput);
+                        }
+                        catch //if that fails then give them an error
+                        {
+                            Console.Write("Please input the date in YYYY-MM-DD format: ");
+                            throw new System.Exception();
+                        }
+
+
+                        try //check to make sure that the year is greater than the min possible value for SQL dates
+                        {
+                            if (DateTime.Parse(dateInput).Year < 1753)
+                            {
+                                throw new System.Exception();
+                            }
+                        }
+                        catch //if it isn't then thow an exception
+                        {
+                            Console.Write("Please input a date greater than 1753: ");
+                            throw new System.Exception();
+                        }
+                        dateCheck = DateTime.Parse(dateInput);
+                    }
+                    catch //if an exception is thrown anywhere in the nested try methods, then prompt the user for a valid date again
+                    {
+                        dateInput = Console.ReadLine();
+                    }
+
+                }
+
             }
 
-            Author authorToEdit = ChooseAuthor("New Author (blank to leave unchanged): ?");
+            Author authorToEdit = ChooseAuthor("New Author (blank to leave unchanged): ", false);
             if (authorToEdit != null)
             {
                 postToEdit.Author = authorToEdit;
             }
 
-            Blog blogToAdd = ChooseBlog("Which blog would you like to add to the post?");
+            Blog blogToAdd = ChooseBlog("Which blog would you like to add to the post? ", false);
             if (blogToAdd != null)
             {
                 postToEdit.Blog = blogToAdd;
