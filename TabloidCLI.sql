@@ -121,3 +121,6 @@ INSERT INTO Tag ( Name ) VALUES ( 'nerdy' );
 --INSERT INTO BlogTag ( BlogId, TagId ) VALUES ( );
 
 INSERT INTO Journal ( Title, Content, CreateDateTime ) VALUES ( 'My Big Day', 'I had a big day today. Would you believe I saw a dog????', '2020-04-30' ) ;
+
+ALTER TABLE Author ADD WasDeleted BIT DEFAULT 0 NOT NULL;
+ALTER TABLE Blog ADD WasDeleted BIT DEFAULT 0 NOT NULL;
